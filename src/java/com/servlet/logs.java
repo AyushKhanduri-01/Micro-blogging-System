@@ -58,11 +58,11 @@ public class logs extends HttpServlet{
         
         
        if(doa.addLog(user)){
-         session.setAttribute("result","Your Log succesfully Saved.");
+         session.setAttribute("email","Your Log succesfully Saved.");
           res.sendRedirect("feed.jsp");
        } 
        else {  
-           session.setAttribute("result", "Error : Failed to save log.");
+           session.setAttribute("email", "Error : Failed to save log.");
            res.sendRedirect("feed.jsp");
         }      
     }

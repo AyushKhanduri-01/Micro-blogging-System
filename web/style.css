@@ -14,11 +14,35 @@ body {
 
 
 .inner-div1{
+    display:flex;
+     justify-content: space-between;
+      align-items: center;
+      
    background-color: #fff; 
     padding: 10px; 
     height:50px;
   
 }
+  .inner-div1 h2 {
+    margin: auto;
+  }
+  
+  .inner-div1 button{
+      height:40px;
+     width:100px;
+    border: none;
+     border-radius: 9px;
+      cursor: pointer;
+     font-size: 15px;
+     color:#fff;
+     background: #1992E2;
+     
+  }
+  .inner-div1 button:hover{
+      background: #1075B8;
+  }
+
+
 .inner-div2{
     background-color: #adb5bd;
       position: relative;
@@ -52,7 +76,7 @@ body {
 
 
 
-form {
+#form2 {
            
             align-items: center;
             justify-content: center;
@@ -64,7 +88,7 @@ form {
             width: 60vw;
             height: 45vh;
             background-color: #adb5bd;
-        }
+ }
 
         label {
             display: block;

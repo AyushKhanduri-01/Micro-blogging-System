@@ -10,4 +10,8 @@ public interface DaoInterface {
     ArrayList <LogClass> getLogs();
     
     boolean deleteLog(int id);
+    
+    boolean isValid(userClass uc);
+    
+    boolean addUser(userClass uc);
 }

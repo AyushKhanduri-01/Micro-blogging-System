@@ -12,7 +12,7 @@ public class DaoClass implements DaoInterface {
 
    
     public boolean addLog(LogClass user) {
-        try(Connection conn = DbConfig.getConnection()){
+        try(Connection conn = DbConfig.getConnectionLogData()){
             String title = user.getTitle();
             String logContent = user.getLogContent();
             Timestamp timestamp = user.getTimestamp();
@@ -63,7 +63,7 @@ public class DaoClass implements DaoInterface {
     @Override
     public ArrayList<LogClass> getLogs() {
         ArrayList<LogClass> resultList = new ArrayList<>();
-       try(Connection conn = DbConfig.getConnection()){
+       try(Connection conn = DbConfig.getConnectionLogData()){
            
           String query = "select * from logs order by timestamp desc";
           
@@ -102,7 +102,7 @@ public class DaoClass implements DaoInterface {
 
     @Override
     public boolean deleteLog(int id) {
-       try(Connection conn = DbConfig.getConnection()){
+       try(Connection conn = DbConfig.getConnectionLogData()){
           String query = "delete from logs where id = ? ";
           PreparedStatement pstm = conn.prepareStatement(query);
           pstm.setInt(1, id);
@@ -116,4 +116,54 @@ public class DaoClass implements DaoInterface {
     }
    
 }
+
+    
+    
+    @Override
+    public boolean isValid(userClass uc) {
+        try(Connection conn = DbConfig.getConnectionUserData()){
+            String email = uc.getEmail();
+            String password = uc.getPassword();
+            
+            String query = "Select * from users where email = ? and password = ?";
+            try (PreparedStatement pstm = conn.prepareStatement(query)) {
+            pstm.setString(1, email);
+            pstm.setString(2, password);
+
+            try (ResultSet resultSet = pstm.executeQuery()) {
+                if (resultSet.next()) {
+                    return true; 
+                }
+            }
+        }
+           
+        }catch(Exception e){
+            e.printStackTrace();
+           return false;
+      }
+        return false;
+    }
+
+    @Override
+    public boolean addUser(userClass uc) {
+         try(Connection conn = DbConfig.getConnectionUserData()){
+             String username = uc.getUsername();
+             String email = uc.getEmail();
+             String password = uc.getPassword();
+             
+             String query = "insert into users values (?,?,?)";
+             PreparedStatement pstm = conn.prepareStatement(query);
+             pstm.setString(1,email);
+             pstm.setString(2, password);
+             pstm.setString(3, username);
+             
+             int row = pstm.executeUpdate();
+             return row > 0;
+             
+         }
+         catch(Exception e){
+             e.printStackTrace();
+             return false;
+         }
+    }
 }

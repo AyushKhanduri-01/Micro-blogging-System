@@ -16,7 +16,7 @@
     <body>
         <%
             HttpSession resSession = request.getSession(false);
-            String result = (String) resSession.getAttribute("result");
+            String result = (String) resSession.getAttribute("email");
 
             if (result == null) {
                 response.sendRedirect("index.html");
@@ -24,23 +24,28 @@
         %>
 
 
-<!-- First div for result started-->         
+        <!-- First div for result started-->         
         <div class="container">
             <div class="inner-div1" class ="inner-div" >
-                <h2 id="result"><%=result%></h2>
+
+                <h2 id="result">Hey! <%=result%></h2>
+                <form id="logout"action="logout" method="get">
+                    <button type="submit">Sign Out</button>
+                </form>
+
             </div>
- <!-- First div for result end -->       
+            <!-- First div for result end -->       
 
 
 
 
- <!-- 2nd div for form started -->
+            <!-- 2nd div for form started -->
             <div class="inner-div2">  
                 <body>      
                     <!-- form started -->
                     <div >
-                        <form action="logs" method="post" >
-                            
+                        <form id="form2" action="logs" method="post" >
+
                             <label for="title">Title:</label>
                             <input type="text" id="title" name="title" required>
 
@@ -49,7 +54,7 @@
 
                             <label for="logContent">Log Content:</label>
                             <textarea id="logContent" name="logContent" rows="4" ></textarea>
-                            
+
                             <input type="number" id ="logId"  name="logId" value="-1" hidden>
 
 
@@ -57,13 +62,13 @@
                         </form>
                     </div>
             </div>
-<!-- 2nd div for form end-->
+            <!-- 2nd div for form end-->
 
 
 
-<!-- 3rd div for log display started -->
+            <!-- 3rd div for log display started -->
             <div class="inner-div3"   >
-                
+
                 <%
                     DaoClass dao = new DaoClass();
                     List<LogClass> resultList = dao.getLogs();
@@ -76,7 +81,7 @@
                         String shortDescription = lc.getShortDescription();
 
                 %>
-                
+
                 <div class="log" >
 
                     <div class="titlediv">
@@ -84,7 +89,7 @@
                         <div class="button-container" >
                             <button  ><a href="logs?id=<%= lc.getId()%>" style="text-decoration: none; color: white">Delete</a></button>
                             <button class="updateButton" data-title="<%=title%>" data-short-description="<%=shortDescription%>" data-log-content="<%=logContent%>"  data-id="<%=id%>" >Update</button>
-                            
+
 
                         </div>
                     </div>   
@@ -98,31 +103,31 @@
                 %>
             </div>
         </div>
-<!-- 3rd div for log display ended -->
+        <!-- 3rd div for log display ended -->
 
 
 
-<script>
-  
-  var updateButtons = document.querySelectorAll('.updateButton');
-  updateButtons.forEach(function(button) {
-    button.addEventListener('click', function() {
-      var title = this.getAttribute('data-title');
-      var shortDescription = this.getAttribute('data-short-description');
-      var logContent = this.getAttribute('data-log-content');
-      var id = this.getAttribute('data-id');
+        <script>
 
-     
-      document.getElementById('title').value = title;
-      document.getElementById('shortDescription').value = shortDescription;
-      document.getElementById('logContent').value = logContent;
-      document.getElementById('logId').value=id;
-      window.scrollTo(0, 0);
-      
-      
-    });
-  });
-</script>
+            var updateButtons = document.querySelectorAll('.updateButton');
+            updateButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var title = this.getAttribute('data-title');
+                    var shortDescription = this.getAttribute('data-short-description');
+                    var logContent = this.getAttribute('data-log-content');
+                    var id = this.getAttribute('data-id');
+
+
+                    document.getElementById('title').value = title;
+                    document.getElementById('shortDescription').value = shortDescription;
+                    document.getElementById('logContent').value = logContent;
+                    document.getElementById('logId').value = id;
+                    window.scrollTo(0, 0);
+
+
+                });
+            });
+        </script>
 
 
 
